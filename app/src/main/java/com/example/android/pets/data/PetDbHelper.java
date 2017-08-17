@@ -14,7 +14,8 @@ public class PetDbHelper extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "shelter.db";
 
     /**
-          * Database version. If you change the database schema, you must increment the database version.
+     * Database version.
+     * If you change the database schema, you must increment the database version.
           */
     private static final int DATABASE_VERSION = 1;
 
@@ -27,16 +28,16 @@ public class PetDbHelper extends SQLiteOpenHelper{
 
         // Create a String that contains the SQL statement
         // to create the pets table
-                String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + PetEntry.TABLE_NAME + " ("
+        String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + PetEntry.TABLE_NAME + " ("
                                 + PetEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                 + PetEntry.COLUMN_PET_NAME + " TEXT NOT NULL, "
                                 + PetEntry.COLUMN_PET_BREED + " TEXT, "
                                 + PetEntry.COLUMN_PET_GENDER + " INTEGER NOT NULL, "
                                 + PetEntry.COLUMN_PET_WEIGHT + " INTEGER NOT NULL DEFAULT 0);";
 
-        // Execute the SQL statement
-                db.execSQL(SQL_CREATE_PETS_TABLE);
-
+        // Execute the
+        // SQL statement
+        db.execSQL(SQL_CREATE_PETS_TABLE);
     }
 
     @Override
