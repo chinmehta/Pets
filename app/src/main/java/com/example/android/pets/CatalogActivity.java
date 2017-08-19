@@ -21,6 +21,7 @@ import static com.example.android.pets.data.PetContract.PetEntry.COLUMN_PET_BREE
 import static com.example.android.pets.data.PetContract.PetEntry.COLUMN_PET_GENDER;
 import static com.example.android.pets.data.PetContract.PetEntry.COLUMN_PET_NAME;
 import static com.example.android.pets.data.PetContract.PetEntry.COLUMN_PET_WEIGHT;
+import static com.example.android.pets.data.PetContract.PetEntry.CONTENT_URI;
 import static com.example.android.pets.data.PetContract.PetEntry.GENDER_MALE;
 import static com.example.android.pets.data.PetContract.PetEntry.TABLE_NAME;
 
@@ -75,13 +76,12 @@ public class CatalogActivity extends AppCompatActivity {
         // and pass the context, which is the current activity.
         PetDbHelper mDbHelper = new PetDbHelper(this);
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // Perform this raw SQL query "SELECT * FROM pets"
         // to get a Cursor that contains all rows from the pets table.
         // Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         //Call to query function instead
+
 
         String[] projection = {
             PetEntry._ID,
@@ -90,13 +90,16 @@ public class CatalogActivity extends AppCompatActivity {
             PetEntry.COLUMN_PET_GENDER,
             PetEntry.COLUMN_PET_WEIGHT
         };
-        Cursor cursor = db.query( PetEntry.TABLE_NAME,
+        /**Cursor cursor = db.query( PetEntry.TABLE_NAME,
                             projection,
         null,
         null,
         null,
         null,
-        null);
+        null);**/
+        Cursor cursor = getContentResolver().query(PetEntry.CONTENT_URI, projection, null, null, null);
+
+
 
         TextView displayView = (TextView) findViewById(R.id.text_view_pet);
 
