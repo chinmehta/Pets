@@ -13,6 +13,7 @@ import android.util.Log;
 import com.example.android.pets.data.PetContract.PetEntry;
 
 import static android.R.attr.id;
+import static com.example.android.pets.data.PetContract.PetEntry.GENDER_UNKNOWN;
 
 /**
  * {@link ContentProvider} for Pets app.
@@ -149,6 +150,22 @@ public class PetProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
+        // Check that the name is not null
+        String name = values.getAsString(PetEntry.COLUMN_PET_NAME);
+        if (name == null) {
+            throw new IllegalArgumentException("Pet requires a name");
+        }
+        Integer gender = values.getAsInteger(PetEntry.COLUMN_PET_GENDER);
+        if (gender == null || !PetEntry.isValidGender(gender)) {
+            throw new IllegalArgumentException("Pet requires valid gender");
+        }
+
+        // If the weight is provided, check that it's greater than or equal to 0 kg
+        Integer weight = values.getAsInteger(PetEntry.COLUMN_PET_WEIGHT);
+        if (weight != null && weight < 0) {
+            throw new IllegalArgumentException("Pet requires valid weight");
+        }
+
 
         // Once we know the ID of the new row in the table,
         // return the new URI with the ID appended to the end of it
@@ -162,6 +179,7 @@ public class PetProvider extends ContentProvider {
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
         return 0;
     }
+
 
     /**
      * Delete the data at the given selection and selection arguments.
